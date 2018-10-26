@@ -1,5 +1,5 @@
 package org.team.project;
-
+import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
