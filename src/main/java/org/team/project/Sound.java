@@ -1,3 +1,5 @@
+package org.team.project;
+
 import javax.sound.sampled.*;
 import java.awt.*;
 import java.lang.*;

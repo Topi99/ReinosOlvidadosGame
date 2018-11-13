@@ -1,13 +1,14 @@
+package org.team.project;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.*;
-import javax.swing.ImageIcon;
 
 public class Characters {
-    private int x;
-    private int y;
-    private Image imagen;
-    private Rectangle rectangulo;
+    protected int x;
+    protected int y;
+    protected Image imagen;
+    protected Rectangle rectangulo;
+
     public void setX(int n){
         x+=n;
     }
