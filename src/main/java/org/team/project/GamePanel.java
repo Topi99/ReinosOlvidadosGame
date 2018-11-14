@@ -7,6 +7,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JPanel;
 
 import org.team.project.state.LoggedOutState;
@@ -36,7 +39,13 @@ public class GamePanel extends JPanel implements Runnable {
     requestFocus();
     readyForTermination();
     this.panelCtx.setStatePanel(new LoggedOutState());
+    this.panelCtx.getStatePanel().addElements(this);
 
+    addMouseListener(new MouseAdapter() {
+      public void mousePressed(MouseEvent e) {
+        panelCtx.getStatePanel().checkButtons(e.getX(), e.getY());
+      }
+    });
     cir = new Circle(0, 0);
   } // GamePanel()
 
@@ -188,5 +197,12 @@ public class GamePanel extends JPanel implements Runnable {
    */
   public int getPwidth() {
     return PWIDTH;
+  }
+
+  /**
+   * @return the panelCtx
+   */
+  public StatePanelCtx getPanelCtx() {
+    return panelCtx;
   }
 }
