@@ -9,10 +9,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 
+import org.team.project.state.LoggedOutState;
+import org.team.project.state.StatePanelCtx;
+
 public class GamePanel extends JPanel implements Runnable {
   private static final long serialVersionUID = 1L;
-  private static final int PWIDTH = 500;
-  private static final int PHEIGHT = 400;
+  private final int PWIDTH = 500;
+  private final int PHEIGHT = 400;
 
   private Thread animator;
   private volatile boolean running = false;
@@ -20,12 +23,19 @@ public class GamePanel extends JPanel implements Runnable {
   private volatile boolean isPaused = false;
   private Circle cir;
 
+  private Graphics dbg;
+  private Image dbImage = null;
+
+  private StatePanelCtx panelCtx;
+
   public GamePanel() {
+    this.panelCtx = new StatePanelCtx();
     setBackground(Color.white);
     setSize(new Dimension(PWIDTH, PHEIGHT));
     setFocusable(true);
     requestFocus();
     readyForTermination();
+    this.panelCtx.setStatePanel(new LoggedOutState());
 
     cir = new Circle(0, 0);
   } // GamePanel()
@@ -41,26 +51,24 @@ public class GamePanel extends JPanel implements Runnable {
       animator.start();
     }
   } // startGame()
-
+  
   public void stopGame() {
     running = false;
   } // stopGame()
-
+  
   public void run() {
-    running = true;
-    while (running) {
+    while (true) {
       gameUpdate();
 
-      gameRender();
+      this.panelCtx.getStatePanel().gameRender(this);
       paintScreen();
 
       try {
-        Thread.sleep(50);
+        Thread.sleep(40);
       } catch (InterruptedException ex) {
         System.out.println(ex.toString());
       }
     }
-    System.exit(0);
   } // run()
 
   private void gameUpdate() {
@@ -69,10 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
   } // gameUpdate()
 
-  private Graphics dbg;
-  private Image dbImage = null;
-
-  private void gameRender() {
+  /* private void gameRender() {
     if (dbImage == null) {
       dbImage = createImage(PWIDTH, PHEIGHT);
       if (dbImage == null) {
@@ -85,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
     dbg.setColor(Color.white);
     dbg.fillRect(0, 0, PWIDTH, PHEIGHT);
     cir.draw(dbg);
-  } // gameRender()
+  } // gameRender() */
 
   /*
    * private void gameOverMessage() { Graphics g; g = this.getGraphics();
@@ -142,4 +147,46 @@ public class GamePanel extends JPanel implements Runnable {
       System.out.println("Graphics error: " + e);
     }
   } // end of paintScreen()
+
+  /**
+   * @param dbg the dbg to set
+   */
+  public void setDbg(Graphics dbg) {
+    this.dbg = dbg;
+  }
+
+  /**
+   * @return the dbg
+   */
+  public Graphics getDbg() {
+    return dbg;
+  }
+
+  /**
+   * @return the dbImage
+   */
+  public Image getDbImage() {
+    return dbImage;
+  }
+
+  /**
+   * @param dbImage the dbImage to set
+   */
+  public void setDbImage(Image dbImage) {
+    this.dbImage = dbImage;
+  }
+
+  /**
+   * @return the pheight
+   */
+  public int getPheight() {
+    return PHEIGHT;
+  }
+
+  /**
+   * @return the pwidth
+   */
+  public int getPwidth() {
+    return PWIDTH;
+  }
 }

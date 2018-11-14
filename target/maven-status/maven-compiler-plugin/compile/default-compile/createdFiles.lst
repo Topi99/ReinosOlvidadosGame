@@ -1,10 +1,13 @@
 org/team/project/GamePanel$1.class
 org/team/project/Circle.class
+org/team/project/Factory.class
+org/team/project/state/LoggedOutState.class
+org/team/project/Wizard.class
+org/team/project/state/StatePanelCtx.class
+org/team/project/Characters.class
+org/team/project/state/StatePanel.class
 org/team/project/Sound.class
 org/team/project/Main.class
-org/team/project/Factory.class
 org/team/project/Shape.class
 org/team/project/GamePanel.class
-org/team/project/Wizard.class
-org/team/project/Characters.class
 org/team/project/Warrior.class
