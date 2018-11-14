@@ -46,7 +46,6 @@ public class GamePanel extends JPanel implements Runnable {
         panelCtx.getStatePanel().checkButtons(e.getX(), e.getY());
       }
     });
-    cir = new Circle(0, 0);
   } // GamePanel()
 
   public void addNotify() {
@@ -86,26 +85,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
   } // gameUpdate()
 
-  /* private void gameRender() {
-    if (dbImage == null) {
-      dbImage = createImage(PWIDTH, PHEIGHT);
-      if (dbImage == null) {
-        System.out.println("dbImage is null");
-        return;
-      } else {
-        dbg = dbImage.getGraphics();
-      }
-    }
-    dbg.setColor(Color.white);
-    dbg.fillRect(0, 0, PWIDTH, PHEIGHT);
-    cir.draw(dbg);
-  } // gameRender() */
-
-  /*
-   * private void gameOverMessage() { Graphics g; g = this.getGraphics();
-   * g.drawString("Game Over", 10, 10); }
-   */
-
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     if (dbImage != null) {
@@ -116,31 +95,10 @@ public class GamePanel extends JPanel implements Runnable {
   private void readyForTermination() {
     addKeyListener(new KeyAdapter() {
       public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if ((keyCode == KeyEvent.VK_ESCAPE) || (keyCode == KeyEvent.VK_Q) || (keyCode == KeyEvent.VK_END)
-            || ((keyCode == KeyEvent.VK_C) && e.isControlDown())) {
-          running = false;
-        }
-        eval(keyCode);
+        panelCtx.getStatePanel().keyPressed(e.getKeyCode());
       }
     });
   } // readyForTermination()
-
-  private void eval(int keyCode) {
-    if (keyCode == KeyEvent.VK_RIGHT) {
-      cir.setX(20);
-      cir.setY(0);
-    } else if (keyCode == KeyEvent.VK_LEFT) {
-      cir.setX(-20);
-      cir.setY(0);
-    } else if (keyCode == KeyEvent.VK_UP) {
-      cir.setX(0);
-      cir.setY(-20);
-    } else if (keyCode == KeyEvent.VK_DOWN) {
-      cir.setX(0);
-      cir.setY(20);
-    }
-  }
 
   private void paintScreen() {
     Graphics g;

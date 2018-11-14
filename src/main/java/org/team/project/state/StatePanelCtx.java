@@ -33,4 +33,9 @@ public class StatePanelCtx implements StatePanel {
   public void addElements(GamePanel panel) {
     this.statePanel.addElements(panel);
   }
+
+  @Override
+  public void keyPressed(int keyCode) {
+    this.statePanel.keyPressed(keyCode);
+  }
 }

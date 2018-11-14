@@ -35,6 +35,10 @@ public class Input {
     g.fillRect(this.x, this.y, this.width, this.height);
   }
 
+  public void call() {
+    
+  }
+
   /**
    * @return the x
    */

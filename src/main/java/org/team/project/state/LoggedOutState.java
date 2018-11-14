@@ -33,15 +33,26 @@ public class LoggedOutState implements StatePanel {
   public void checkButtons(int x, int y) {
     for(Input btn: buttons) {
       if((x >= btn.getX() && x < btn.getX() + btn.getWidth()) && (y >= btn.getY() && y < btn.getY() + btn.getHeight())) {
-        System.out.println("Click");
+        btn.call();
       }
     }
   }
 
   @Override
   public void addElements(GamePanel panel) {
-    Input btn = new Input(50, 80, 100, 40, Color.red);
+    Input btn = new Input(50, 80, 100, 40, Color.red) {
+      @Override
+      public void call() {
+        panel.getPanelCtx().setStatePanel(new PlayingStatePanel());
+        panel.getPanelCtx().getStatePanel().addElements(panel);
+      }
+    };
 
     buttons.add(btn);
+  }
+
+  @Override
+  public void keyPressed(int keyCode) {
+
   }
 }
