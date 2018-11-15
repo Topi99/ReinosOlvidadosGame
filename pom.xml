@@ -49,6 +49,12 @@ limitations under the License.
 
     <dependencies>
         <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>6.5.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>de.learnlib.distribution</groupId>
             <artifactId>learnlib-distribution</artifactId>
             <type>pom</type>

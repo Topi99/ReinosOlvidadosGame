@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <title>Login</title>
+</head>
+<body>
+  <header class="container">
+    <div class="left">
+      <h1>
+        Login
+      </h1>
+      <p>
+        Inicia sesión con tu correo y contraseña para jugar Reinos Olvidados.
+      </p>
+    </div>
+    <div class="right">
+      <img src="img.jpg" alt="imagen">
+    </div>
+  </header>
+  <section class="container white be-black">
+    <article class="form">
+      <label for="email">Correo:</label>
+      <input type="email" name="email" id="email" placeholder="ingresa tu correo">
+      <label for="pass">Contraseña:</label>
+      <input type="password" name="pass" id="pass" placeholder="ingresa tu contraseña">
+      <button id="send" class="be-white">Iniciar Sesión</button>
+    </article>
+  </section>
+
+  <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyD4VCB__72rwMfwCUhrh1Rwa2FGGrIIi3k",
+      authDomain: "chatdemo-43f97.firebaseapp.com",
+      databaseURL: "https://chatdemo-43f97.firebaseio.com",
+      projectId: "chatdemo-43f97",
+      storageBucket: "chatdemo-43f97.appspot.com",
+      messagingSenderId: "1091179345173"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script>
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        alert(user.uid)
+      } else {
+        // No user is signed in.
+      }
+    });
+    
+    document.querySelector('#send').addEventListener('click', e => {
+      var email = document.querySelector('#email').value;
+      var password = document.querySelector('#pass').value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+    });
+  </script>
+</body>
+</html>

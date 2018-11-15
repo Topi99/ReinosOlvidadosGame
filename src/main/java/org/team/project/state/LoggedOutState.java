@@ -23,11 +23,11 @@ public class LoggedOutState implements StatePanel {
       }
     }
 
-    panel.getDbg().setColor(Color.gray);
+    panel.getDbg().setColor(Color.LIGHT_GRAY);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
 
     panel.getDbg().setColor(Color.red);
-    panel.getDbg().drawString("Inicia Sesión", 50, 50);
+    panel.getDbg().drawString("Inicia Sesión en el navegador", 50, 50);
 
     for(Input butn: inputs) {
       butn.draw(panel.getDbg());

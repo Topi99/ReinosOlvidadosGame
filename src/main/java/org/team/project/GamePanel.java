@@ -10,16 +10,27 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 
 import org.team.project.state.LoggedOutState;
 import org.team.project.state.StatePanelCtx;
 
 public class GamePanel extends JPanel implements Runnable {
   private static final long serialVersionUID = 1L;
-  private final int PWIDTH = 500;
-  private final int PHEIGHT = 400;
+  private int PWIDTH = 500;
+  private int PHEIGHT = 400;
+  private Dimension screnDimension;
 
   private Thread animator;
   private volatile boolean running = false;
@@ -30,8 +41,31 @@ public class GamePanel extends JPanel implements Runnable {
   private Image dbImage = null;
 
   private StatePanelCtx panelCtx;
+  private FileInputStream serviceAccount;
 
   public GamePanel() {
+    try {
+      URL file = this.getClass().getResource("chatdemo-43f97-firebase-adminsdk-z5inm-7461052f81.json");
+      serviceAccount = new FileInputStream(file.getPath());
+  
+      FirebaseOptions options = new FirebaseOptions.Builder()
+        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+        .setDatabaseUrl("https://chatdemo-43f97.firebaseio.com/")
+        .build();
+  
+      FirebaseApp.initializeApp(options);
+    } catch(FileNotFoundException e) {
+      System.out.println(e.getMessage());
+    } catch(IOException e) {
+      System.out.println(e.getMessage());
+    } catch(Exception e) {
+      System.out.println(e.getMessage());
+    }
+
+    screnDimension = Toolkit.getDefaultToolkit().getScreenSize();
+    PWIDTH = (int)screnDimension.getWidth();
+    PHEIGHT = (int)screnDimension.getHeight();
+    
     this.panelCtx = new StatePanelCtx();
     setBackground(Color.white);
     setSize(new Dimension(PWIDTH, PHEIGHT));
@@ -46,6 +80,25 @@ public class GamePanel extends JPanel implements Runnable {
         panelCtx.getStatePanel().checkInputs(e.getX(), e.getY());
       }
     });
+
+    try {
+      GoogleCredential googleCred = GoogleCredential.fromStream(serviceAccount);
+
+      // Add the required scopes to the Google credential
+      GoogleCredential scoped = googleCred.createScoped(
+          Arrays.asList(
+            "https://www.googleapis.com/auth/firebase.database",
+            "https://www.googleapis.com/auth/userinfo.email"
+          )
+      );
+      
+      // Use the Google credential to generate an access token
+      scoped.refreshToken();
+      String token = scoped.getAccessToken();
+      System.out.println("token "+token);  
+    } catch(Exception e) {
+      System.out.println("Error: "+e.getMessage());      
+    }
   } // GamePanel()
 
   public void addNotify() {
