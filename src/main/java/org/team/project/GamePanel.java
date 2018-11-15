@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -24,7 +25,6 @@ public class GamePanel extends JPanel implements Runnable {
   private volatile boolean running = false;
   private volatile boolean gameOver = false;
   private volatile boolean isPaused = false;
-  private Circle cir;
 
   private Graphics dbg;
   private Image dbImage = null;
@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     addMouseListener(new MouseAdapter() {
       public void mousePressed(MouseEvent e) {
-        panelCtx.getStatePanel().checkButtons(e.getX(), e.getY());
+        panelCtx.getStatePanel().checkInputs(e.getX(), e.getY());
       }
     });
   } // GamePanel()
@@ -95,6 +95,9 @@ public class GamePanel extends JPanel implements Runnable {
   private void readyForTermination() {
     addKeyListener(new KeyAdapter() {
       public void keyPressed(KeyEvent e) {
+        if ((e.getModifiers() & ActionEvent.CTRL_MASK) == ActionEvent.CTRL_MASK) {
+          System.out.println("CTRL KEY PRESSED");
+        }
         panelCtx.getStatePanel().keyPressed(e.getKeyCode());
       }
     });

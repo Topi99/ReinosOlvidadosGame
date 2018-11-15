@@ -25,8 +25,8 @@ public class StatePanelCtx implements StatePanel {
   }
 
   @Override
-  public void checkButtons(int x, int y) {
-    this.statePanel.checkButtons(x, y);
+  public void checkInputs(int x, int y) {
+    this.statePanel.checkInputs(x, y);
   }
 
   @Override

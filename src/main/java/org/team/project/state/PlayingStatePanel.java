@@ -28,7 +28,7 @@ public class PlayingStatePanel implements StatePanel {
   } // gameRender()
 
   @Override
-  public void checkButtons(int x, int y) {
+  public void checkInputs(int x, int y) {
   }
   
   @Override

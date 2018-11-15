@@ -9,6 +9,7 @@ public class Input {
   protected int width, height;
   protected Rectangle rect;
   protected Color color;
+  protected boolean active = false;
 
   public Input(int x, int y, int width, int height) {
     this.x = x;
@@ -39,6 +40,10 @@ public class Input {
     
   }
 
+  public void deactivate() {
+    this.active = false;
+  }
+
   /**
    * @return the x
    */
@@ -65,5 +70,12 @@ public class Input {
    */
   public int getHeight() {
     return height;
+  }
+
+  /**
+   * @return the active
+   */
+  public boolean isActive() {
+    return active;
   }
 }
