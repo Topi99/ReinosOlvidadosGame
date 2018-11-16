@@ -1,6 +1,10 @@
 package org.team.project.state;
 
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.util.ArrayList;
 
 import org.team.project.GamePanel;
@@ -26,7 +30,7 @@ public class LoggedOutState implements StatePanel {
     panel.getDbg().setColor(Color.LIGHT_GRAY);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
 
-    panel.getDbg().setColor(Color.red);
+    panel.getDbg().setColor(Color.black);
     panel.getDbg().drawString("Inicia Sesión en el navegador", 50, 50);
 
     for(Input butn: inputs) {
@@ -47,40 +51,36 @@ public class LoggedOutState implements StatePanel {
 
   @Override
   public void addElements(GamePanel panel) {
-    Button btn = new Button(50, 80, 100, 40, Color.blue, "Iniciar Sesión") {
+    TextField txtFieldUID = new TextField(50, 150, 200, 40);
+
+    Button btnLogin = new Button(50, 80, 100, 40, Color.blue, "Iniciar Sesión") {
       @Override
       public void call() {
         this.active = true;
-        panel.getPanelCtx().setStatePanel(new PlayingStatePanel());
+        panel.getPanelCtx().setStatePanel(new CityViewStatePanel(txtFieldUID.getValue()));
         panel.getPanelCtx().getStatePanel().addElements(panel);
       }
     };
 
-    TextField txtFieldUserMail = new TextField(50, 150, 100, 40) {
+    Button btnPasteUID = new Button(50, 200, 100, 40, Color.blue, "Pegar UID") {
       @Override
       public void call() {
         this.active = true;
+        Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable t = c.getContents(this);
+        if (t == null)
+            return;
+        try {
+          txtFieldUID.setValue((String) t.getTransferData(DataFlavor.stringFlavor));
+        } catch (Exception e){
+            e.printStackTrace();
+        }//try
       }
     };
 
-    TextField txtFieldDomain = new TextField(50, 200, 100, 40) {
-      @Override
-      public void call() {
-        this.active = true;
-      }
-    };
-
-    TextField txtFieldPass = new TextField(50, 250, 100, 40) {
-      @Override
-      public void call() {
-        this.active = true;
-      }
-    };
-
-    inputs.add(btn);
-    inputs.add(txtFieldDomain);
-    inputs.add(txtFieldUserMail);
-    inputs.add(txtFieldPass);
+    inputs.add(btnLogin);
+    inputs.add(txtFieldUID);
+    inputs.add(btnPasteUID);
   }
 
   @Override

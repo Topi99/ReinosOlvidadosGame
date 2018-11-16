@@ -37,7 +37,7 @@ public class Input {
   }
 
   public void call() {
-    
+    this.active = true;
   }
 
   public void deactivate() {

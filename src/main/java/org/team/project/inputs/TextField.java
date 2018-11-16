@@ -18,6 +18,20 @@ public class TextField extends Input {
     g.drawString(this.value == null ? "" : this.value.toString(), this.x, this.y+g.getFont().getSize()/2+this.height/2);
   }
 
+  /**
+   * @param value the value to set
+   */
+  public void setValue(String value) {
+    this.value.append(value);
+  }
+
+  /**
+   * @return the value
+   */
+  public String getValue() {
+    return value.toString();
+  }
+
   public void keyPressed(int keyCode) {
     if(keyCode == 8) {
       try {

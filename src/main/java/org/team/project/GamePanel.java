@@ -14,11 +14,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 
 import javax.swing.JPanel;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -80,25 +78,6 @@ public class GamePanel extends JPanel implements Runnable {
         panelCtx.getStatePanel().checkInputs(e.getX(), e.getY());
       }
     });
-
-    try {
-      GoogleCredential googleCred = GoogleCredential.fromStream(serviceAccount);
-
-      // Add the required scopes to the Google credential
-      GoogleCredential scoped = googleCred.createScoped(
-          Arrays.asList(
-            "https://www.googleapis.com/auth/firebase.database",
-            "https://www.googleapis.com/auth/userinfo.email"
-          )
-      );
-      
-      // Use the Google credential to generate an access token
-      scoped.refreshToken();
-      String token = scoped.getAccessToken();
-      System.out.println("token "+token);  
-    } catch(Exception e) {
-      System.out.println("Error: "+e.getMessage());      
-    }
   } // GamePanel()
 
   public void addNotify() {
