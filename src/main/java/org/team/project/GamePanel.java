@@ -15,7 +15,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
+
+// import javax.swing.ImageIcon;
+//import javax.swing.JFrame;
 import javax.swing.JPanel;
+// import java.net.*;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -41,6 +45,9 @@ public class GamePanel extends JPanel implements Runnable {
   private StatePanelCtx panelCtx;
   private FileInputStream serviceAccount;
 
+  //private Fondo fondo1;
+  // private URL url= getClass().getResource("map (2).png");
+  // private Image image= new ImageIcon(url).getImage();
   public GamePanel() {
     try {
       URL file = this.getClass().getResource("chatdemo-43f97-firebase-adminsdk-z5inm-7461052f81.json");
@@ -116,7 +123,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
   } // gameUpdate()
-
+  // public Image getImage(){
+  //   return image;
+  // }
+  
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     if (dbImage != null) {
@@ -134,7 +144,7 @@ public class GamePanel extends JPanel implements Runnable {
       }
     });
   } // readyForTermination()
-
+  
   private void paintScreen() {
     Graphics g;
     try {

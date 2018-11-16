@@ -1,13 +1,11 @@
 package org.team.project.state;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-
-import org.team.project.Circle;
 import org.team.project.GamePanel;
+import org.team.project.Warrior;
 
 public class PlayingStatePanel implements StatePanel {
-  Circle cir;
+  Warrior warrior1;
 
   @Override
   public void gameRender(GamePanel panel) {
@@ -23,7 +21,8 @@ public class PlayingStatePanel implements StatePanel {
     panel.getDbg().setColor(Color.white);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
     
-    cir.draw(panel.getDbg());
+    panel.getDbg().drawImage(warrior1.getImage(), warrior1.getX(),warrior1.getY(), null);
+    warrior1.drawVida(panel.getDbg());
     
   } // gameRender()
 
@@ -33,24 +32,12 @@ public class PlayingStatePanel implements StatePanel {
   
   @Override
   public void addElements(GamePanel panel) {
-    cir = new Circle(0, 0);
+    warrior1=new Warrior();
 	}
 
   @Override
   public void keyPressed(int keyCode) {
-    if (keyCode == KeyEvent.VK_RIGHT) {
-      cir.setX(20);
-      cir.setY(0);
-    } else if (keyCode == KeyEvent.VK_LEFT) {
-      cir.setX(-20);
-      cir.setY(0);
-    } else if (keyCode == KeyEvent.VK_UP) {
-      cir.setX(0);
-      cir.setY(-20);
-    } else if (keyCode == KeyEvent.VK_DOWN) {
-      cir.setX(0);
-      cir.setY(20);
-    }
+    warrior1.move(keyCode);
   }
 
 }
