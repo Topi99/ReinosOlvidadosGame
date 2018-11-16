@@ -7,7 +7,11 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+// import javax.swing.ImageIcon;
+//import javax.swing.JFrame;
 import javax.swing.JPanel;
+// import java.net.*;
 
 public class GamePanel extends JPanel implements Runnable {
   private static final long serialVersionUID = 1L;
@@ -19,7 +23,13 @@ public class GamePanel extends JPanel implements Runnable {
   private volatile boolean gameOver = false;
   private volatile boolean isPaused = false;
   private Circle cir;
-
+  private Characters warrior1;
+  private Graphics dbg;
+  private Image dbImage = null;
+  //private Fondo fondo1;
+  // private URL url= getClass().getResource("map (2).png");
+  // private Image image= new ImageIcon(url).getImage();
+  private Graphics g;
   public GamePanel() {
     setBackground(Color.white);
     setSize(new Dimension(PWIDTH, PHEIGHT));
@@ -28,6 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
     readyForTermination();
 
     cir = new Circle(0, 0);
+    warrior1=new Warrior();
+    g=this.getGraphics();
   } // GamePanel()
 
   public void addNotify() {
@@ -45,12 +57,10 @@ public class GamePanel extends JPanel implements Runnable {
   public void stopGame() {
     running = false;
   } // stopGame()
-
   public void run() {
     running = true;
     while (running) {
       gameUpdate();
-
       gameRender();
       paintScreen();
 
@@ -68,10 +78,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
   } // gameUpdate()
-
-  private Graphics dbg;
-  private Image dbImage = null;
-
+  // public Image getImage(){
+  //   return image;
+  // }
   private void gameRender() {
     if (dbImage == null) {
       dbImage = createImage(PWIDTH, PHEIGHT);
@@ -84,21 +93,23 @@ public class GamePanel extends JPanel implements Runnable {
     }
     dbg.setColor(Color.white);
     dbg.fillRect(0, 0, PWIDTH, PHEIGHT);
+    //dbg.drawImage(fondo1.getImagen(),fondo1.getX(),fondo1.getY(),null);
+    //dbg.drawImage(this.getImage(),0, 0,null);
+    //g.setOpaque(false);
     cir.draw(dbg);
+    dbg.drawImage(warrior1.getImage(), warrior1.getX(),warrior1.getY(), null);
+    warrior1.drawVida(dbg);
   } // gameRender()
-
   /*
    * private void gameOverMessage() { Graphics g; g = this.getGraphics();
    * g.drawString("Game Over", 10, 10); }
    */
-
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     if (dbImage != null) {
       g.drawImage(dbImage, 0, 0, null);
     }
   } // paintComponent()
-
   private void readyForTermination() {
     addKeyListener(new KeyAdapter() {
       public void keyPressed(KeyEvent e) {
@@ -107,27 +118,31 @@ public class GamePanel extends JPanel implements Runnable {
             || ((keyCode == KeyEvent.VK_C) && e.isControlDown())) {
           running = false;
         }
-        eval(keyCode);
+        warrior1.move(keyCode);
+        
       }
     });
   } // readyForTermination()
-
   private void eval(int keyCode) {
-    if (keyCode == KeyEvent.VK_RIGHT) {
-      cir.setX(20);
-      cir.setY(0);
-    } else if (keyCode == KeyEvent.VK_LEFT) {
-      cir.setX(-20);
-      cir.setY(0);
-    } else if (keyCode == KeyEvent.VK_UP) {
-      cir.setX(0);
-      cir.setY(-20);
-    } else if (keyCode == KeyEvent.VK_DOWN) {
-      cir.setX(0);
-      cir.setY(20);
-    }
-  }
+    // int xw,yw;
 
+    // if (keyCode == KeyEvent.VK_RIGHT) {
+    //   warrior1.setX(5);
+    //   warrior1.setY(0);
+    //   xw=warrior1.getX();
+    //   yw=warrior1.getY();
+    //   System.out.println(xw +","+ yw);
+    // } else if (keyCode == KeyEvent.VK_LEFT) {
+    //   warrior1.setX(-5);
+    //   warrior1.setY(0);
+    // } else if (keyCode == KeyEvent.VK_UP) {
+    //   warrior1.setX(0);
+    //   warrior1.setY(-5);
+    // } else if (keyCode == KeyEvent.VK_DOWN) {
+    //   warrior1.setX(0);
+    //   warrior1.setY(5);
+    // }
+  }
   private void paintScreen() {
     Graphics g;
     try {

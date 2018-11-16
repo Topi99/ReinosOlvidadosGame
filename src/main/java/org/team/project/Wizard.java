@@ -7,5 +7,6 @@ public class Wizard extends Characters{
         y=100;
         ImageIcon img= new ImageIcon (this.getClass().getResource("hechicero.png"));
         imagen = img.getImage(); 
+        vida= 100;
     }
 }
