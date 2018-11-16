@@ -25,11 +25,9 @@ public class Characters {
 //hola soy pauchis :)
     public void setX(int n){
         x+=n;
-        System.out.println(getX()+","+getY());
     }
     public void setY(int n){
-        y+=y;
-        System.out.println(getX()+","+getY());
+        y+=n;
     }
     public int getX(){
         return x;
@@ -56,32 +54,20 @@ public class Characters {
         return imagen;
     }
      public void move(int k){
-        
-            // y = y-1;
-            // }
-            // if(k==KeyEvent.VK_RIGHT){
-            // 	x =x+1;
-            // }
-            // if(k==KeyEvent.VK_LEFT){
-            // 	x=x-1;
-            // }
-            // if(k==KeyEvent.VK_DOWN){
-            // 	y=y+1;
-            // }
         if(k==KeyEvent.VK_UP){
-			this.setY(-1);
+			this.setY(-10);
 			this.setX(0);
 		}
 		if(k==KeyEvent.VK_RIGHT){
 			this.setY(0);
-			this.setX(1);
+			this.setX(10);
 		}
 		if(k==KeyEvent.VK_LEFT){
 			this.setY(0);
-			this.setX(-1);
+			this.setX(-10);
 		}
 		if(k==KeyEvent.VK_DOWN){
-			this.setY(1);
+			this.setY(10);
 			this.setX(0);
 		}
     }
