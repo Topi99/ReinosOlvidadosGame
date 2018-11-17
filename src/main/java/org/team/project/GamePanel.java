@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
   // private Image image= new ImageIcon(url).getImage();
   public GamePanel() {
     try {
-      URL file = this.getClass().getResource("chatdemo-43f97-firebase-adminsdk-z5inm-7461052f81.json");
+      URL file = this.getClass().getResource("../../../chatdemo-43f97-firebase-adminsdk-z5inm-7461052f81.json");
       serviceAccount = new FileInputStream(file.getPath());
   
       FirebaseOptions options = new FirebaseOptions.Builder()

@@ -7,7 +7,7 @@ public class Warrior extends Characters{
         x=100;
         y=100;
         c= Color.green;
-        ImageIcon img= new ImageIcon (this.getClass().getResource("warrior.png"));
+        ImageIcon img= new ImageIcon (this.getClass().getResource("../../../warrior.png"));
         imagen = img.getImage(); 
         vida=120;
     }
