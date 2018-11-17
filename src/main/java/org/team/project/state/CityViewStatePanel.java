@@ -25,7 +25,7 @@ public class CityViewStatePanel implements StatePanel {
       this.userDisplayName = userRecord.getDisplayName();
 
     } catch(Exception e) {
-      System.out.println(e.getMessage());
+      System.out.println("Firebase: "+e.getMessage());
     }
   }
 

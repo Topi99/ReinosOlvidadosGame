@@ -15,11 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 
-
-// import javax.swing.ImageIcon;
-//import javax.swing.JFrame;
 import javax.swing.JPanel;
-// import java.net.*;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -50,7 +46,9 @@ public class GamePanel extends JPanel implements Runnable {
   // private Image image= new ImageIcon(url).getImage();
   public GamePanel() {
     try {
-      URL file = this.getClass().getResource("chatdemo-43f97-firebase-adminsdk-z5inm-7461052f81.json");
+      URL file = getClass().getResource("chatdemo-43f97-firebase-adminsdk-z5inm-7461052f81.json");
+      
+      System.out.println(file);
       serviceAccount = new FileInputStream(file.getPath());
   
       FirebaseOptions options = new FirebaseOptions.Builder()
@@ -60,11 +58,9 @@ public class GamePanel extends JPanel implements Runnable {
   
       FirebaseApp.initializeApp(options);
     } catch(FileNotFoundException e) {
-      System.out.println(e.getMessage());
+      System.out.println("File not found: "+e.getMessage());
     } catch(IOException e) {
-      System.out.println(e.getMessage());
-    } catch(Exception e) {
-      System.out.println(e.getMessage());
+      System.out.println("IO: "+e.getMessage());
     }
 
     screnDimension = Toolkit.getDefaultToolkit().getScreenSize();
