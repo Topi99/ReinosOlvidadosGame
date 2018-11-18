@@ -86,6 +86,16 @@ limitations under the License.
             </configuration>
             </plugin>
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/java/org/team/project</directory>
+                <includes>
+                    <include>chatdemo-43f97-firebase-adminsdk-z5inm-7461052f81.json</include>
+                    <include>warrior.png</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
 </project>
