@@ -17,7 +17,7 @@ public class Warrior extends Characters{
         pase=7;
         BufferedImageLoader loader= new BufferedImageLoader();
         try{
-            spriteSheet= loader.loadImage("warriorsprite");
+            spriteSheet= loader.loadImage("../../../warriorsprite.png");
         }catch(IOException e){
             e.printStackTrace();
         }
