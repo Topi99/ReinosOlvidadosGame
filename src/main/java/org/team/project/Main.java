@@ -13,6 +13,7 @@ public class Main {
     Runtime rt = Runtime.getRuntime();
     try {
       Process pr = rt.exec("python -m SimpleHTTPServer");
+      System.out.println(pr.toString());
       if (Desktop.isDesktopSupported()) {
         Desktop.getDesktop().browse(new URI("http://localhost:8000/web"));
       }
