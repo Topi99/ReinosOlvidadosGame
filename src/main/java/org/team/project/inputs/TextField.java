@@ -2,20 +2,31 @@ package org.team.project.inputs;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
+
+import org.team.project.GamePanel;
 
 public class TextField extends Input {
   private Color color = Color.white;
   private StringBuilder value = new StringBuilder("");
+  private BufferedImage bg;
 
   public TextField(int x, int y, int width, int height) {
     super(x, y, width, height);
+    try {
+      bg = ImageIO.read(this.getClass().getResource("../../../../input.png"));
+    } catch(Exception e) {
+      System.out.println(e.getMessage());
+    }
+    this.bg = GamePanel.resize(this.bg, this.width, this.height);
   }
 
   public void draw(Graphics g) {
-    g.setColor(this.color);
-    g.fillRect(this.x, this.y, this.width, this.height);
-    g.setColor(Color.black);
-    g.drawString(this.value == null ? "" : this.value.toString(), this.x, this.y+g.getFont().getSize()/2+this.height/2);
+    g.drawImage(bg, x, y, width, height, null);
+    g.setColor(Color.white);
+    g.drawString(this.value == null ? "" : this.value.toString(), this.x+10, this.y+g.getFont().getSize()/2+this.height/2);
   }
 
   /**

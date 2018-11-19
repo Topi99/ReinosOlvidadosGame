@@ -1,6 +1,7 @@
 package org.team.project.state;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -10,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 
 import org.team.project.GamePanel;
+import org.team.project.Panel;
+import org.team.project.PanelFig;
 import org.team.project.buildings.Castle;
 import org.team.project.buildings.Market;
 import org.team.project.buildings.Village;
@@ -23,6 +26,7 @@ public class CityViewStatePanel implements StatePanel {
   private ArrayList<Input> inputs = new ArrayList<Input>();
   private BufferedImage bg = null;
   private Button village, market, castle;
+  private ArrayList<PanelFig> panels = new ArrayList<PanelFig>();
   
   public CityViewStatePanel(String uid) {
     this.UID = uid;
@@ -54,19 +58,12 @@ public class CityViewStatePanel implements StatePanel {
 
     panel.getDbg().setColor(Color.LIGHT_GRAY);
     panel.getDbg().drawImage(bg, 0, 0, panel.getPwidth(), panel.getPheight(), null);
-    // panel.getDbg().drawImage(market, panel.getPwidth()/2 - market.getWidth()/5, panel.getPheight() - market.getHeight()-50, market.getWidth(), market.getHeight(), null);
-    // panel.getDbg().drawImage(village, panel.getPwidth() - village.getWidth() - 15, 0, village.getWidth(), village.getHeight(), null);
-    // panel.getDbg().drawImage(castle, panel.getPwidth()/2 - (castle.getWidth()/2)*3, panel.getPheight()/2 - market.getHeight()/2, castle.getWidth(), castle.getHeight(), null);
     market.draw(panel.getDbg());
     village.draw(panel.getDbg());
     castle.draw(panel.getDbg());
-    panel.getDbg().setColor(Color.black);
-    panel.getDbg().drawString("UID: " + this.UID, 50, 50);
-    panel.getDbg().drawString("E-Mail: " + this.userEmail, 50, 100);
-    panel.getDbg().drawString("Name: " + this.userDisplayName, 50, 150);
     
-    for(Input butn: inputs) {
-      butn.draw(panel.getDbg());
+    for(Panel p: panels) {
+      p.draw(panel.getDbg());
     }
   }
 
@@ -103,6 +100,42 @@ public class CityViewStatePanel implements StatePanel {
     inputs.add(village);
     inputs.add(market);
     inputs.add(castle);
+
+
+    PanelFig statusPanel = new PanelFig(0,0,550, 150) {
+      @Override
+      public void draw(Graphics g) {
+        g.drawImage(this.getBg(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), null);
+        g.setColor(Color.white);
+        g.drawString("UID: " + getUID(), 15, 30);
+        g.drawString("E-Mail: " + getUserEmail(), 15, 55);
+        g.drawString("Name: " + getUserDisplayName(), 15, 80);
+        btnPlay.draw(g);
+      }
+    };
+
+    panels.add(statusPanel);
+  }
+
+  /**
+   * @return the uID
+   */
+  public String getUID() {
+    return UID;
+  }
+
+  /**
+   * @return the userEmail
+   */
+  public String getUserEmail() {
+    return userEmail;
+  }
+
+  /**
+   * @return the userDisplayName
+   */
+  public String getUserDisplayName() {
+    return userDisplayName;
   }
 
   @Override

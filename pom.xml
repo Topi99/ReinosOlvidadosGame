@@ -97,6 +97,9 @@ limitations under the License.
                     <include>village.png</include>
                     <include>market.png</include>
                     <include>castle.png</include>
+                    <include>panel.png</include>
+                    <include>button.png</include>
+                    <include>input.png</include>
                 </includes>
             </resource>
         </resources>
