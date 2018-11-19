@@ -101,6 +101,7 @@ limitations under the License.
                     <include>button.png</include>
                     <include>input.png</include>
                     <include>closeBtn.png</include>
+                    <include>warriorsprite.png</include>
                 </includes>
             </resource>
         </resources>

@@ -2,8 +2,10 @@ package org.team.project;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.util.Observable;
 
-public class Characters {
+public class Characters extends Observable {
     protected int x;
     protected int y;
     protected Image imagen;
@@ -11,6 +13,8 @@ public class Characters {
     protected int vida;
     protected Rectangle Barravida;
     protected Color c;
+    protected int pase;
+    protected BufferedImage spriteSheet=null;
     /**
      * @return the barravida
      */
@@ -19,15 +23,19 @@ public class Characters {
     }
     public void drawVida(Graphics g){
         g.setColor(c);
-        g.drawRect(80,80, getVida(),10);
-        g.fillRect(80, 80, getVida(), 10);
+        g.drawRect(getX()-10,getY()-5, getVida(),10);
+        g.fillRect(getX()-10, getY()-5, getVida(), 10);
     }
 //hola soy pauchis :)
     public void setX(int n){
         x+=n;
+        setChanged(); //ya se cambió
+        notifyObservers();//notifica a los observers que se hayan agregado
     }
     public void setY(int n){
         y+=n;
+        setChanged(); //ya se cambió
+        notifyObservers();//notifica a los observers que se hayan agregado
     }
     public int getX(){
         return x;
@@ -53,22 +61,30 @@ public class Characters {
     public Image getImage(){
         return imagen;
     }
-     public void move(int k){
-        if(k==KeyEvent.VK_UP){
-			this.setY(-10);
-			this.setX(0);
-		}
-		if(k==KeyEvent.VK_RIGHT){
-			this.setY(0);
-			this.setX(10);
-		}
-		if(k==KeyEvent.VK_LEFT){
-			this.setY(0);
-			this.setX(-10);
-		}
-		if(k==KeyEvent.VK_DOWN){
-			this.setY(10);
-			this.setX(0);
-		}
+    public void attack(){
+
     }
+    public void actions(int k){
+        if(k==KeyEvent.VK_UP){
+            		this.setY(-pase);
+            		this.setX(0);
+            	}
+            	if(k==KeyEvent.VK_RIGHT){
+            		this.setY(0);
+            		this.setX(pase);
+            	}
+            	if(k==KeyEvent.VK_LEFT){
+            		this.setY(0);
+            		this.setX(-pase);
+            	}
+            	if(k==KeyEvent.VK_DOWN){
+            		this.setY(pase);
+            		this.setX(0);
+                }
+                if(k==KeyEvent.VK_M){
+                    attack();
+                }
+    }
+   
+    
 }
