@@ -100,6 +100,7 @@ limitations under the License.
                     <include>panel.png</include>
                     <include>button.png</include>
                     <include>input.png</include>
+                    <include>closeBtn.png</include>
                 </includes>
             </resource>
         </resources>

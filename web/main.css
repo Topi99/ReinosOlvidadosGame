@@ -162,3 +162,7 @@ button {
   color: #fafafa;
   text-shadow: 0px 1px 0px #a62100; 
 }
+
+.hidden {
+  display: none !important;
+}

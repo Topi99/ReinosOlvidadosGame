@@ -22,13 +22,27 @@
       <img src="img.jpg" alt="imagen">
     </div>
   </header>
-  <section class="container white be-black">
+  <section class="container login white be-black">
     <article class="form">
       <label for="email">Correo:</label>
       <input type="email" name="email" id="email" placeholder="ingresa tu correo">
       <label for="pass">Contraseña:</label>
       <input type="password" name="pass" id="pass" placeholder="ingresa tu contraseña">
+      <button id="create" class="be-white">Crear cuenta</button>
       <button id="send" class="be-white">Iniciar Sesión</button>
+    </article>
+  </section>
+
+  <section class="container data hidden white be-black">
+    <article class="form">
+      <label for="email">Correo:</label>
+      <input type="email" name="email" id="email-a" placeholder="ingresa tu correo">
+      <label for="name">Nombre:</label>
+      <input type="text" name="name" id="name" placeholder="ingresa tu nombre">
+      <label for="name">UID:</label>
+      <input type="text" name="uid" id="uid" disabled>
+      <button id="save" class="be-white">Guardar</button>
+      <button id="logout" class="be-white">Cerrar Sesion</button>
     </article>
   </section>
 
@@ -48,10 +62,26 @@
   <script>
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        // User is signed in.
-        alert(user.uid)
+        document.querySelector(".login").classList.toggle("hidden");
+        document.querySelector(".data").classList.toggle("hidden");
+        document.querySelector("#email-a").value = user.email;
+        document.querySelector("#name").value = user.displayName;
+        document.querySelector("#uid").value = user.uid;
+
+        document.querySelector("#save").addEventListener('click', e => {
+          user.updateProfile({
+            email: document.querySelector("#email-a").value,
+            displayName: document.querySelector("#name").value
+          });          
+        });
+
+        document.querySelector("#logout").addEventListener('click', e => {
+          document.querySelector(".login").classList.toggle("hidden");
+          document.querySelector(".data").classList.toggle("hidden");
+        });
       } else {
-        // No user is signed in.
+        document.querySelector(".login").classList.toggle("hidden");
+        document.querySelector(".data").classList.toggle("hidden");
       }
     });
     
@@ -60,6 +90,18 @@
       var password = document.querySelector('#pass').value;
 
       firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+    });
+
+    document.querySelector("#create").addEventListener('click', e=> {
+      var email = document.querySelector('#email').value;
+      var password = document.querySelector('#pass').value;
+      
+      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
