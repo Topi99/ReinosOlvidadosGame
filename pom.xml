@@ -93,6 +93,10 @@ limitations under the License.
                 <includes>
                     <include>chatdemo-43f97-firebase-adminsdk-z5inm-7461052f81.json</include>
                     <include>warrior.png</include>
+                    <include>map2 (1).png</include>
+                    <include>village.png</include>
+                    <include>market.png</include>
+                    <include>castle.png</include>
                 </includes>
             </resource>
         </resources>

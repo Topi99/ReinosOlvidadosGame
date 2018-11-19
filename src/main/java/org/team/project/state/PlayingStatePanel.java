@@ -20,7 +20,6 @@ public class PlayingStatePanel implements StatePanel {
     }
     panel.getDbg().setColor(Color.white);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
-    
     panel.getDbg().drawImage(warrior1.getImage(), warrior1.getX(),warrior1.getY(), null);
     warrior1.drawVida(panel.getDbg());
     
