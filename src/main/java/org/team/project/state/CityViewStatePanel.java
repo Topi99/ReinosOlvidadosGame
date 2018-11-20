@@ -65,6 +65,7 @@ public class CityViewStatePanel implements StatePanel {
     myNotifRef.addValueEventListener(new ValueEventListener(){
       @Override
       public void onDataChange(DataSnapshot snapshot) {
+        notifications.clear();
         System.out.println("Update:*********\n\n\n"+snapshot.getValue().toString());
         for(DataSnapshot snap: snapshot.getChildren()) {
           Notification noti = new Notification(snap.child("pending").getValue().toString().matches("true"), snap.child("from").getValue().toString(), snap.child("to").getValue().toString());
