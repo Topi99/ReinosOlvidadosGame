@@ -1,19 +1,23 @@
 package org.team.project.buildings;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import com.google.firebase.auth.ExportedUserRecord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.ListUsersPage;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.team.project.GamePanel;
 import org.team.project.Notification;
@@ -21,12 +25,13 @@ import org.team.project.inputs.Button;
 import org.team.project.inputs.Input;
 import org.team.project.state.CityViewStatePanel;
 import org.team.project.state.InfoStatePanel;
-import org.team.project.state.StatePanel;
 
 public class Castle extends Button {
   private BufferedImage bg;
   private GamePanel panel;
   private CityViewStatePanel city;
+  private ArrayList<Notification> notifications = new ArrayList<Notification>();
+  private ArrayList<Button> notificationsBtns = new ArrayList<Button>();
 
   public Castle(int x, int y, int width, int height, GamePanel panel) {
     super(x, y, width, height);
@@ -45,13 +50,30 @@ public class Castle extends Button {
     this.city = (CityViewStatePanel)panel.getPanelCtx().getStatePanel();
   }
 
-  int yString = 100;
+  int yString = 150;
 
   public void call() {
     this.active = true;
     ListUsersPage page;
     ArrayList<ExportedUserRecord> users = new ArrayList<ExportedUserRecord>();
-    // ArrayList<Input> inputs = new ArrayList<Input>();
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myNotifRef = database.getReference("notifications/"+city.getUID());
+
+
+    myNotifRef.addValueEventListener(new ValueEventListener(){
+      @Override
+      public void onDataChange(DataSnapshot snapshot) {
+        for(DataSnapshot snap: snapshot.getChildren()) {
+          Notification notif = snap.getValue(Notification.class);
+          notifications.add(notif);
+        }
+      }
+    
+      @Override
+      public void onCancelled(DatabaseError error) {
+        System.out.println("The read failed: " + error.getCode());
+      }
+    });
 
     try {
       page = FirebaseAuth.getInstance().listUsers(null);
@@ -61,8 +83,6 @@ public class Castle extends Button {
         }
         page = page.getNextPage();
       }
-
-
     } catch(Exception e) { System.out.println(e.getMessage()); }
     
     panel.getPanelCtx().setStatePanel(new InfoStatePanel(panel) {
@@ -81,7 +101,6 @@ public class Castle extends Button {
         panel.getDbg().drawImage(this.getBg(), panel.getPwidth()/2 - this.getWidth()/2, 0, this.getWidth(), this.getHeight(), null);
 
         panel.getDbg().setColor(Color.white);
-        panel.getDbg().setFont(new Font(panel.getDbg().getFont().getFamily(), Font.BOLD, panel.getDbg().getFont().getSize()));
         panel.getDbg().drawString("Castle", panel.getPwidth()/2 - this.getWidth()/2 + 30, 70);
         
         for(Input i: this.getInputs()) {
@@ -103,17 +122,29 @@ public class Castle extends Button {
           }
         };
 
+        for(Notification notif: notifications) {
+          Button btn = new Button(panel.getPwidth()/2 - this.getWidth()/2 + 30, yString, 150, 50, notif.from, notif.from) {
+            @Override
+            public void call() {
+              Map<String, Object> update = new HashMap<>();
+              update.put("pending", false);
+              myNotifRef.child(notif.from).updateChildrenAsync(update);
+            }
+          };
+          this.addInput(btn);
+        }
+
         for(ExportedUserRecord user: users) {
-          Button btn = new Button(panel.getPwidth()/2 - this.getWidth()/2 + 30, yString, 250, 50, user.getDisplayName() == null ? user.getUid():user.getDisplayName(), user.getUid()) {
+          Button btn = new Button(panel.getPwidth()/2 - this.getWidth()/2 + 50, yString, 250, 50, user.getDisplayName() == null ? user.getUid():user.getDisplayName(), user.getUid()) {
             @Override
             public void call() {
               this.active = true;
               final FirebaseDatabase database = FirebaseDatabase.getInstance();
               DatabaseReference ref = database.getReference("notifications/"+this.getData());
-              ref.child(city.getUID()).setValueAsync(new Notification(true));
+              ref.child(city.getUID()).setValueAsync(new Notification(true, city.getUID(), user.getUid()));
             }
           };
-          btn.draw(panel.getDbg());
+          btn.setStrPaddLeft(50);
           this.addInput(btn);
           yString += 65;
         }

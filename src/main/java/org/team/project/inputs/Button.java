@@ -68,7 +68,7 @@ public class Button extends Input {
   public void draw(Graphics g) {
     g.drawImage(bg, x, y,width, height, null);
     g.setColor(Color.black);
-    g.drawString(this.message, this.x+20, this.y+g.getFont().getSize()/2+this.height/2-2);
+    g.drawString(this.message, this.x+20+this.strPaddLeft, this.y+g.getFont().getSize()/2+this.height/2-2);
   }
 
   /**
