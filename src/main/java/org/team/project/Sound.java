@@ -11,7 +11,7 @@ public class Sound implements Runnable{
     private String name;
     public Sound(){
         thread= new Thread(this);
-        name= "musicaepica.wav";
+        name= "../../../medieval.wav";
         thread.start(); //se inicia el thread
     }
     public void run(){
@@ -26,7 +26,7 @@ public class Sound implements Runnable{
             e.printStackTrace();
         }
         try {
-            clip.loop(30); //se loopea 30 veces
+            clip.loop(300); //se loopea 30 veces
         } catch (Exception e) {
             e.printStackTrace();
         }

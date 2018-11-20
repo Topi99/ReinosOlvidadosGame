@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class Entidad {
+public class Entidad extends Observable{
 	protected int alto;
 	protected int ancho;
 	protected int x, y;
@@ -28,9 +28,13 @@ public class Entidad {
 	  }
 
 	public void setX(int n){
+		setChanged();
+		notifyObservers();
 		this.x += n;
 	}
 	public void setY(int n){
+		setChanged();
+		notifyObservers();
 		this.y += n;
 	}
 	public Rectangle getRectangle() {

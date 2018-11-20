@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
   private int PWIDTH = 500;
   private int PHEIGHT = 400;
   private Dimension screnDimension;
+  Sound sonido;
 
   private Thread animator;
   private volatile boolean running = false;
@@ -80,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
     this.panelCtx.setStatePanel(new LoggedOutState());
     this.panelCtx.getStatePanel().addElements(this);
 
+    sonido= new Sound();
     addMouseListener(new MouseAdapter() {
       public void mousePressed(MouseEvent e) {
         panelCtx.getStatePanel().checkInputs(e.getX(), e.getY());

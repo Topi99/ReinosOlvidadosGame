@@ -31,14 +31,14 @@ public class PlayingStatePanel implements StatePanel {
         panel.setDbg(panel.getDbImage().getGraphics());
       }
     }
-   
+   ew.addObserver(warrior1);
     panel.getDbg().setColor(Color.white);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
     
      panel.getDbg().drawImage(warrior1.getBufferImage(), warrior1.getX(),warrior1.getY(), null);
      warrior1.drawVida(panel.getDbg());
      
-     System.out.println(warrior1.getX() + "," + warrior1.getY() +":"+ warrior1.getVida());
+    // System.out.println(warrior1.getX() + "," + warrior1.getY() +":"+ warrior1.getVida());
     //  panel.getDbg().drawImage(wizard1.getBufferImage(),wizard1.getX(),wizard1.getY(),null);
     //  wizard1.drawVida(panel.getDbg());
     //  xw=wizard1.getX()+12;
@@ -59,7 +59,7 @@ public class PlayingStatePanel implements StatePanel {
   public void addElements(GamePanel panel) {
     warrior1=new Warrior();
     wizard1=new Wizard();
-    ew=new EnergyWizard();
+    ew=new EnergyWizard(wizard1.getX(),wizard1.getY());
 	}
 
   @Override

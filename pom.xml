@@ -104,6 +104,7 @@ limitations under the License.
                     <include>warriorsprite.png</include>
                     <include>CrazyWizard.png</include>
                     <include>energyball.png</include>
+                    <include>medieval.wav</include>
                 </includes>
             </resource>
         </resources>

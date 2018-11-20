@@ -3,9 +3,12 @@ package org.team.project;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Observer;
+import java.util.Observable;
+
 //import java.util.Observable;
 
-public class Characters  {
+public class Characters implements Observer {
     protected int x;
     protected int y;
     protected Image imagen;
@@ -15,6 +18,7 @@ public class Characters  {
     protected Color c;
     protected int pase;
     protected BufferedImage spriteSheet=null;
+    protected Entidad enti;
     /**
      * @return the barravida
      */
@@ -64,6 +68,18 @@ public class Characters  {
     public void attack(){
 
     }
+    public void update(Observable o, Object o1) {
+        this.enti= (Entidad) o;
+        if(overlaps(enti))
+            {
+        this.setVida(-10);
+        System.out.println("esta chocando");}//el cirulo se cambia de color si ya se tocaron
+      
+    }
+    //método que verifica si ya se interceptaron los circulos, no es necesario usar intersects
+    public boolean overlaps (Entidad e) {
+        return x < e.x + 32 && x + 32 > e.x && y < e.y + 32 && y + 32 > e.y;
+    }
     public void actions(int k){
         if(k==KeyEvent.VK_UP){
             		this.setY(-pase);
@@ -85,9 +101,7 @@ public class Characters  {
                     attack();
                 }
     }
-    public boolean overlaps (Entidad r) {
-        return getRectangle().intersects(r.getRectangle());
-    }
+
    
     
 }
