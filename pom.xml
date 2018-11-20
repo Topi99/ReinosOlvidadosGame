@@ -103,6 +103,7 @@ limitations under the License.
                     <include>closeBtn.png</include>
                     <include>warriorsprite.png</include>
                     <include>CrazyWizard.png</include>
+                    <include>energyball.png</include>
                 </includes>
             </resource>
         </resources>

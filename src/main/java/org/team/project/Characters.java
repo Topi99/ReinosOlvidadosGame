@@ -3,9 +3,9 @@ package org.team.project;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.Observable;
+//import java.util.Observable;
 
-public class Characters extends Observable {
+public class Characters  {
     protected int x;
     protected int y;
     protected Image imagen;
@@ -29,13 +29,13 @@ public class Characters extends Observable {
 //hola soy pauchis :)
     public void setX(int n){
         x+=n;
-        setChanged(); //ya se cambió
-        notifyObservers();//notifica a los observers que se hayan agregado
+        // setChanged(); //ya se cambió
+        // notifyObservers();//notifica a los observers que se hayan agregado
     }
     public void setY(int n){
         y+=n;
-        setChanged(); //ya se cambió
-        notifyObservers();//notifica a los observers que se hayan agregado
+        // setChanged(); //ya se cambió
+        // notifyObservers();//notifica a los observers que se hayan agregado
     }
     public int getX(){
         return x;
@@ -84,6 +84,9 @@ public class Characters extends Observable {
                 if(k==KeyEvent.VK_M){
                     attack();
                 }
+    }
+    public boolean overlaps (Entidad r) {
+        return getRectangle().intersects(r.getRectangle());
     }
    
     
