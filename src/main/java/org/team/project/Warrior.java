@@ -44,16 +44,19 @@ public class Warrior extends Characters{
         else
         ima=1;
     }
-    @Override
+    
     public void setX(int n){
-        x+=n;
+        this.x=n;
+        System.out.println("\n\n\n"+n);
         updateWalkingImage();
     }
-    @Override
+
     public void setY(int n){
-        y+=n;
+        this.y=n;
+        System.out.println("\n\n\n"+n);
         updateWalkingImage();
     }
+
     @Override
     public void attack(){
         if(ima<=10)

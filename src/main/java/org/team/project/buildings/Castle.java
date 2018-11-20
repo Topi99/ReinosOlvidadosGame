@@ -115,7 +115,7 @@ public class Castle extends Button {
               final FirebaseDatabase database = FirebaseDatabase.getInstance();
               DatabaseReference ref = database.getReference("notifications/"+this.getData());
               ref.child(city.getUID()).setValueAsync(new Notification(true, city.getUID(), user.getUid()));
-              panel.getPanelCtx().setStatePanel(new PlayingStatePanel(true));
+              panel.getPanelCtx().setStatePanel(new PlayingStatePanel(true, city.getUID(), user.getUid()));
               panel.getPanelCtx().getStatePanel().addElements(panel);
             }
           };
