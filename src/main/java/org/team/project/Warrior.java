@@ -35,58 +35,24 @@ public class Warrior extends Characters{
     public void setIma(int ima){
         this.ima+=ima;
     }
+    public void updateWalkingImage(){
+        if(ima<=10)
+        {
+            men=ss.grabImage(ima,3,32,32);
+            setIma(1);
+        }
+        else
+        ima=1;
+    }
     @Override
-    public void actions(int k){
-        if(k==KeyEvent.VK_UP){
-            		this.setY(-pase);
-                    this.setX(0);
-                    if(ima<=10)
-                    {
-                        men=ss.grabImage(ima,3,32,32);
-                        setIma(1);
-                    }
-                    else
-                    ima=1;
-            	}
-            	if(k==KeyEvent.VK_RIGHT){
-            		this.setY(0);
-                    this.setX(pase);
-                    if(ima<=10)
-                    {
-                        men=ss.grabImage(ima,3,32,32);
-                        ima++;
-                    }
-                    else
-                    ima=1;
-            	}
-            	if(k==KeyEvent.VK_LEFT){
-            		this.setY(0);
-                    this.setX(-pase);
-                    if(ima<=10)
-                    {
-                        men=ss.grabImage(ima,3,32,32);
-                        ima++;
-                    }
-                    else
-                    ima=1;
-            	}
-            	if(k==KeyEvent.VK_DOWN){
-            		this.setY(pase);
-                    this.setX(0);
-                    if(ima<=10)
-                    {
-                        men=ss.grabImage(ima,3,32,32);
-                        ima++;
-                    }
-                    else
-                    ima=1;
-                }
-                if(k==KeyEvent.VK_M){
-                    attack();
-                }
-                if(k==KeyEvent.VK_D){
-                    die();
-                }
+    public void setX(int n){
+        x+=n;
+        updateWalkingImage();
+    }
+    @Override
+    public void setY(int n){
+        y+=n;
+        updateWalkingImage();
     }
     @Override
     public void attack(){
