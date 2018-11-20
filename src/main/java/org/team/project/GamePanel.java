@@ -43,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
 
   private StatePanelCtx panelCtx;
   private FileInputStream serviceAccount;
+  private static GamePanel instance = null;
 
   //private Fondo fondo1;
   // private URL url= getClass().getResource("map (2).png");
@@ -67,6 +68,8 @@ public class GamePanel extends JPanel implements Runnable {
     screnDimension = Toolkit.getDefaultToolkit().getScreenSize();
     PWIDTH = (int)screnDimension.getWidth();
     PHEIGHT = (int)screnDimension.getHeight();
+
+    instance = this;
     
     this.panelCtx = new StatePanelCtx();
     setBackground(Color.white);
@@ -215,5 +218,12 @@ public class GamePanel extends JPanel implements Runnable {
    */
   public StatePanelCtx getPanelCtx() {
     return panelCtx;
+  }
+
+  /**
+   * @return the instance
+   */
+  public static GamePanel getInstance() {
+    return instance;
   }
 }

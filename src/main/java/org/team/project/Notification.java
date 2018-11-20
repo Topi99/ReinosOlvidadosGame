@@ -9,5 +9,6 @@ public class Notification {
     this.pending = pending;
     this.from = from;
     this.to = to;
+    System.out.println("SE crea una notificación");
   }
 }

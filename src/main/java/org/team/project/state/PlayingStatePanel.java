@@ -8,6 +8,11 @@ import org.team.project.Wizard;
 public class PlayingStatePanel implements StatePanel {
   Warrior warrior1;
   Wizard wizard1;
+  private boolean retador;
+
+  public PlayingStatePanel(boolean retador) {
+    this.retador = retador;
+  }
 
   @Override
   public void gameRender(GamePanel panel) {

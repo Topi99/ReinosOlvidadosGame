@@ -18,7 +18,7 @@ public class Wizard extends Characters{
         x=180;
         y=180;
         vida= 100;
-        pase=12;
+        pase=5;
         ima=1;
         c=Color.blue;
         BufferedImageLoader loader= new BufferedImageLoader();
