@@ -85,6 +85,9 @@ public class Characters extends Observable {
                     attack();
                 }
     }
+    public boolean overlaps (Entidad r) {
+        return getRectangle().intersects(r.getRectangle());
+    }
    
     
 }

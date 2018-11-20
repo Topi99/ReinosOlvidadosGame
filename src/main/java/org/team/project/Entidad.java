@@ -1,20 +1,23 @@
 package org.team.project;
 
 import java.awt.*;
+import java.awt.image.*;
 import java.util.Observable;
 import java.util.Observer;
 
 
 public class Entidad implements Observer{
-	protected int lado;
+	protected int alto;
+	protected int ancho;
 	protected int x, y;
 	protected Color c;
 	protected Rectangle rect;
 	protected Characters person;
+	protected BufferedImage spriteSheet=null;
 
 	public void draw(Graphics g){
 		g.setColor(c);
-		g.fillRect(x,y,lado,lado);
+		g.fillRect(x,y,ancho,alto);
 	}
 	public int getX() {
 		return x;

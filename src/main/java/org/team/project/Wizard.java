@@ -15,12 +15,13 @@ public class Wizard extends Characters{
     
 
     public Wizard(){
-        x=180;
-        y=180;
+        x=280;
+        y=280;
         vida= 100;
         pase=12;
-        ima=1;
+        ima=2;
         c=Color.blue;
+        rectangulo=new Rectangle(getX(),getY(),32,32);
         BufferedImageLoader loader= new BufferedImageLoader();
         try{
             spriteSheet= loader.loadImage("../../../CrazyWizard.png");
@@ -28,6 +29,7 @@ public class Wizard extends Characters{
             e.printStackTrace();
         }
         ss= new SpriteSheet(spriteSheet);
+        //men=ss.grabImage(1,4,32,32);
        
     }
     public BufferedImage getBufferImage(){

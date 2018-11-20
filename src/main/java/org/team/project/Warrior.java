@@ -17,8 +17,9 @@ public class Warrior extends Characters{
         y=150;
         vida=120;
         pase=7;
-        ima=1;
+        ima=2;
         c=Color.green;
+        rectangulo=new Rectangle(getX(),getY(),32,32);
         BufferedImageLoader loader= new BufferedImageLoader();
         try{
             spriteSheet= loader.loadImage("../../../warriorsprite.png");
@@ -26,6 +27,7 @@ public class Warrior extends Characters{
             e.printStackTrace();
         }
         ss= new SpriteSheet(spriteSheet);
+        //men=ss.grabImage(1,3,32,32);
     }
     public BufferedImage getBufferImage(){
         return men;
