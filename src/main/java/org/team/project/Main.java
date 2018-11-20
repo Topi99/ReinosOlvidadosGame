@@ -20,11 +20,13 @@ public class Main {
     } catch(Exception e) {
       System.out.println(e.getMessage());
     }
+   
 
     GamePanel gp = new GamePanel();
     frame.setSize(new Dimension(gp.getPwidth(), gp.getPheight()));
     frame.getContentPane().add(gp, BorderLayout.CENTER);
     frame.setVisible(true);
     gp.setVisible(true);
+    
   }
 }

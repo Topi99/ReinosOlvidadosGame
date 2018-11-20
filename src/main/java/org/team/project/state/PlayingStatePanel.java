@@ -80,7 +80,7 @@ public class PlayingStatePanel implements StatePanel {
         panel.setDbg(panel.getDbImage().getGraphics());
       }
     }
-   
+   ew.addObserver(warrior1);
     panel.getDbg().setColor(Color.white);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
     
@@ -124,7 +124,7 @@ public class PlayingStatePanel implements StatePanel {
       other = warrior1;
     }
     //wizard1=new Wizard();
-    ew=new EnergyWizard();
+   //  ew=new EnergyWizard();
 	}
 
   @Override
