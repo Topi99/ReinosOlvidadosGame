@@ -6,7 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class Entidad implements Observer{
+public class Entidad {
 	protected int alto;
 	protected int ancho;
 	protected int x, y;
@@ -36,17 +36,6 @@ public class Entidad implements Observer{
 	public Rectangle getRectangle() {
 		return rect;
 	  }
-	@Override
-	public void update(Observable o, Object o1) {
-		this.person= (Characters) o;
-		if(overlaps(person))
-			{
-		person.setVida(-10);
-		System.out.println("esta chocando");
-	}//el cirulo se cambia de color si ya se tocaron
-		else
-			this.c=Color.blue;
-	}
 		//método que verifica si ya se interceptaron los circulos, no es necesario usar intersects
 		public boolean overlaps (Characters r) {
 			return getRectangle().intersects(r.getRectangle());
