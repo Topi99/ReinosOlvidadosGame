@@ -32,11 +32,28 @@ public class Wizard extends Characters{
         //men=ss.grabImage(1,4,32,32);
        
     }
+    public void setX(int n){
+        x+=n;
+        updateWalkingImage();
+    }
+    public void setY(int n){
+        y+=n;
+        updateWalkingImage();
+    }
     public BufferedImage getBufferImage(){
         return men;
     }
     public void setIma(int ima){
         this.ima+=ima;
+    }
+    public void updateWalkingImage(){
+        if(ima<=10){
+            men=ss.grabImage(ima,4,32,32);
+            ima++;
+        }
+        else{
+            ima=1;
+        }
     }
     @Override
     public void attack() {
@@ -61,58 +78,6 @@ public class Wizard extends Characters{
             ima=1;
         }
     }
-    @Override
-    public void actions(int k){
-        if(k==KeyEvent.VK_UP){
-            this.setY(-pase);
-            this.setX(0);
-            if(ima<=10)
-            {
-                men=ss.grabImage(ima,3,32,32);
-                setIma(1);
-            }
-            else
-            ima=1;
-        }
-        if(k==KeyEvent.VK_RIGHT){
-            this.setY(0);
-            this.setX(pase);
-            if(ima<=10)
-            {
-                men=ss.grabImage(ima,3,32,32);
-                ima++;
-            }
-            else
-            ima=1;
-        }
-        if(k==KeyEvent.VK_LEFT){
-            this.setY(0);
-            this.setX(-pase);
-            if(ima<=8)
-            {
-                men=ss.grabImage(ima,3,32,32);
-                ima++;
-            }
-            else
-            ima=1;
-        }
-        if(k==KeyEvent.VK_DOWN){
-            this.setY(pase);
-            this.setX(0);
-            if(ima<=10)
-            {
-                men=ss.grabImage(ima,3,32,32);
-                ima++;
-            }
-            else
-            ima=1;
-        }
-        if(k==KeyEvent.VK_M){
-            attack();
-        }
-        if(k==KeyEvent.VK_D){
-            die();
-        }
-
-    }
+   
+       
 }

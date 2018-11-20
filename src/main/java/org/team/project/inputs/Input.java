@@ -10,6 +10,7 @@ public class Input {
   protected Rectangle rect;
   protected Color color;
   protected boolean active = false;
+  protected int strPaddLeft = 0;
 
   public Input(int x, int y, int width, int height) {
     this.x = x;
@@ -77,5 +78,19 @@ public class Input {
    */
   public boolean isActive() {
     return active;
+  }
+
+  /**
+   * @return the strPaddLeft
+   */
+  public int getStrPaddLeft() {
+    return strPaddLeft;
+  }
+
+  /**
+   * @param strPaddLeft the strPaddLeft to set
+   */
+  public void setStrPaddLeft(int strPaddLeft) {
+    this.strPaddLeft = strPaddLeft;
   }
 }

@@ -14,6 +14,11 @@ public class PlayingStatePanel implements StatePanel {
   EnergyWizard ew;
   int kc,i=1;
   int xw,yw;
+  private boolean retador;
+
+  public PlayingStatePanel(boolean retador) {
+    this.retador = retador;
+  }
 
   @Override 
   public void gameRender(GamePanel panel) {
@@ -30,20 +35,20 @@ public class PlayingStatePanel implements StatePanel {
     panel.getDbg().setColor(Color.white);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
     
-    //  panel.getDbg().drawImage(warrior1.getBufferImage(), warrior1.getX(),warrior1.getY(), null);
-    //  warrior1.drawVida(panel.getDbg());
+     panel.getDbg().drawImage(warrior1.getBufferImage(), warrior1.getX(),warrior1.getY(), null);
+     warrior1.drawVida(panel.getDbg());
      
-    //  System.out.println(warrior1.getX() + "," + warrior1.getY() +":"+ warrior1.getVida());
-     panel.getDbg().drawImage(wizard1.getBufferImage(),wizard1.getX(),wizard1.getY(),null);
-     wizard1.drawVida(panel.getDbg());
+     System.out.println(warrior1.getX() + "," + warrior1.getY() +":"+ warrior1.getVida());
+    //  panel.getDbg().drawImage(wizard1.getBufferImage(),wizard1.getX(),wizard1.getY(),null);
+    //  wizard1.drawVida(panel.getDbg());
     //  xw=wizard1.getX()+12;
     //  yw=wizard1.getY()+16;
 
    //if(kc==KeyEvent.VK_M){
-     panel.getDbg().drawImage(ew.getBufferImage(),wizard1.getX(),wizard1.getY(),null);
+    //  panel.getDbg().drawImage(ew.getBufferImage(),wizard1.getX(),wizard1.getY(),null);
      // i++;
     //}
-     System.out.println(wizard1.getX()+","+wizard1.getY()+ ":"+ wizard1.getVida()+ " ima:"+wizard1.getIma());
+     //System.out.println(wizard1.getX()+","+wizard1.getY()+ ":"+ wizard1.getVida()+ " ima:"+wizard1.getIma());
   } // gameRender()
 
   @Override
@@ -61,9 +66,9 @@ public class PlayingStatePanel implements StatePanel {
   public void keyPressed(int keyCode) {
     //if(keyCode==KeyEvent.VK_1)
    // kc=keyCode;
-    wizard1.actions(keyCode);
+   // wizard1.actions(keyCode);
     //if(keyCode==KeyEvent.VK_2)
-    //wizard1.actions(keyCode);
+    warrior1.actions(keyCode);
   }
   
 }

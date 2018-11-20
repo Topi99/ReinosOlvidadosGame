@@ -4,11 +4,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.team.project.GamePanel;
 import org.team.project.Panel;
@@ -19,6 +26,7 @@ import org.team.project.buildings.Village;
 import org.team.project.inputs.Button;
 import org.team.project.inputs.Input;
 import org.team.project.*;
+import org.team.project.Notification;
 
 public class CityViewStatePanel implements StatePanel {
   private String UID;
@@ -29,6 +37,11 @@ public class CityViewStatePanel implements StatePanel {
   private BufferedImage bg = null;
   private Button village, market, castle;
   private ArrayList<PanelFig> panels = new ArrayList<PanelFig>();
+  private CityViewStatePanel city;
+  private ArrayList<Notification> notifications = new ArrayList<Notification>();
+  final FirebaseDatabase database = FirebaseDatabase.getInstance();
+  DatabaseReference myNotifRef;
+  private int yString = 0;
   
   public CityViewStatePanel(String uid) {
     this.UID = uid;
@@ -45,6 +58,25 @@ public class CityViewStatePanel implements StatePanel {
     market = new Button(0,0,0,0);
     castle = new Button(0,0,0,0);
     warrior1 = new Warrior();
+    this.city = this;
+    myNotifRef = database.getReference("notifications/"+UID);
+
+
+    myNotifRef.addValueEventListener(new ValueEventListener(){
+      @Override
+      public void onDataChange(DataSnapshot snapshot) {
+        System.out.println("Update:*********\n\n\n"+snapshot.getValue().toString());
+        for(DataSnapshot snap: snapshot.getChildren()) {
+          Notification noti = new Notification(snap.child("pending").getValue().toString().matches("true"), snap.child("from").getValue().toString(), snap.child("to").getValue().toString());
+          notifications.add(noti);
+        }
+      }
+    
+      @Override
+      public void onCancelled(DatabaseError error) {
+        System.out.println("The read failed: " + error.getCode());
+      }
+    });
   }
 
   @Override
@@ -65,7 +97,6 @@ public class CityViewStatePanel implements StatePanel {
     village.draw(panel.getDbg());
     castle.draw(panel.getDbg());
     
-    
     for(Panel p: panels) {
       p.draw(panel.getDbg());
     }
@@ -82,18 +113,66 @@ public class CityViewStatePanel implements StatePanel {
     }
   }
 
+  // GamePanel addElements
   @Override
   public void addElements(GamePanel panel) {
-    Button btnPlay = new Button(350, 80, 100, 40, Color.blue, "Jugar") {
+    Button btnPlay = new Button(350, 80, 130, 40, Color.blue, "Notificaciones") {
       @Override
+      // public void call() {
+      //   this.active = true;
+      //   panel.getPanelCtx().setStatePanel(new PlayingStatePanel());
+      //   panel.getPanelCtx().getStatePanel().addElements(panel);
+      // }
+
+      //Button Call
       public void call() {
         this.active = true;
-        System.out.println("HOla");
-        panel.getPanelCtx().setStatePanel(new PlayingStatePanel());
+        panel.getPanelCtx().setStatePanel(new InfoStatePanel(panel) {
+          // InfoStatePanel gameRender
+          @Override
+          public void gameRender(GamePanel panel) {
+            if (panel.getDbImage() == null) {
+              panel.setDbImage(panel.createImage(panel.getPwidth(), panel.getPheight()));
+              if (panel.getDbImage() == null) {
+                System.out.println("panel.getDbImage() is null");
+                return;
+              } else {
+                panel.setDbg(panel.getDbImage().getGraphics());
+              }
+            }
+    
+            panel.getDbg().drawImage(this.getBg(), panel.getPwidth()/2 - this.getWidth()/2, 0, this.getWidth(), this.getHeight(), null);
+    
+            panel.getDbg().setColor(Color.white);
+            panel.getDbg().drawString("Notificaciones", panel.getPwidth()/2 - this.getWidth()/2 + 30, 70);
+            
+            for(Input i: this.getInputs()) {
+              i.draw(panel.getDbg());
+            }
+          }// InfoStatePanel gameRender
+    
+          // InfoStatePanel addElements
+          @Override 
+          public void addElements(GamePanel panel) {
+            yString = 150;
+            Button close = new Button(panel.getPwidth()/2+this.getWidth()/2-20, 5, 50, 150, "../../../../closeBtn.png") {
+              @Override
+              public void call() {
+                this.active = true;
+                panel.getPanelCtx().setStatePanel(city);
+              }
+            };
+            this.addInput(close);
+            for(Notification notif: notifications) {
+              this.addInput(getButton(notif));
+              yString += 65;
+            }
+          } // addElements InfoStatePanel
+        }); // InfoStatePanel
         panel.getPanelCtx().getStatePanel().addElements(panel);
       }
     };
-
+    btnPlay.setStrPaddLeft(6);
     market = new Market(panel.getPwidth()/2 - market.getWidth()/5, panel.getPheight() - market.getHeight()-50, market.getWidth(), market.getHeight(), panel);
     village = new Village(panel.getPwidth() - village.getWidth() - 15, 0, village.getWidth(), village.getHeight(), panel);
     castle = new Castle(panel.getPwidth()/2 - (castle.getWidth()/2)*3, panel.getPheight()/2 - castle.getHeight()/2, castle.getWidth(), castle.getHeight(), panel);
@@ -119,6 +198,19 @@ public class CityViewStatePanel implements StatePanel {
     };
 
     panels.add(statusPanel);
+  }
+
+  public Button getButton(Notification notif) {
+    Button btn = new Button(200, yString, 150, 50, notif.from, notif.from) {
+      @Override
+      public void call() {
+        Map<String, Object> update = new HashMap<>();
+        update.put("pending", false);
+        myNotifRef.child(notif.from).updateChildrenAsync(update);
+      }
+    };
+
+    return btn;
   }
 
   /**

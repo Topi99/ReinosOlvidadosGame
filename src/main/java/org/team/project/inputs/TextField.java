@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import org.team.project.GamePanel;
 
 public class TextField extends Input {
-  private Color color = Color.white;
   private StringBuilder value = new StringBuilder("");
   private BufferedImage bg;
 
