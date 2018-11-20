@@ -165,7 +165,7 @@ public class CityViewStatePanel implements StatePanel {
             };
             this.addInput(close);
             for(Notification notif: notifications) {
-              this.addInput(getButton(notif));
+              this.addInput(getButton(notif, panel, notif.to));
               yString += 65;
             }
           } // addElements InfoStatePanel
@@ -201,13 +201,15 @@ public class CityViewStatePanel implements StatePanel {
     panels.add(statusPanel);
   }
 
-  public Button getButton(Notification notif) {
+  public Button getButton(Notification notif, GamePanel panel, String to) {
     Button btn = new Button(200, yString, 150, 50, notif.from, notif.from) {
       @Override
       public void call() {
         Map<String, Object> update = new HashMap<>();
         update.put("pending", false);
         myNotifRef.child(notif.from).updateChildrenAsync(update);
+        panel.getPanelCtx().setStatePanel(new PlayingStatePanel(true, city.getUID(), to));
+        panel.getPanelCtx().getStatePanel().addElements(panel);
       }
     };
 
