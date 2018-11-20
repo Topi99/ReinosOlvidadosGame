@@ -18,10 +18,12 @@ import org.team.project.buildings.Market;
 import org.team.project.buildings.Village;
 import org.team.project.inputs.Button;
 import org.team.project.inputs.Input;
+import org.team.project.*;
 
 public class CityViewStatePanel implements StatePanel {
   private String UID;
   private String userEmail = "";
+  Warrior warrior1;
   private String userDisplayName = "";
   private ArrayList<Input> inputs = new ArrayList<Input>();
   private BufferedImage bg = null;
@@ -42,6 +44,7 @@ public class CityViewStatePanel implements StatePanel {
     village = new Button(0,0,0,0);
     market = new Button(0,0,0,0);
     castle = new Button(0,0,0,0);
+    warrior1 = new Warrior();
   }
 
   @Override
@@ -61,6 +64,7 @@ public class CityViewStatePanel implements StatePanel {
     market.draw(panel.getDbg());
     village.draw(panel.getDbg());
     castle.draw(panel.getDbg());
+    
     
     for(Panel p: panels) {
       p.draw(panel.getDbg());
