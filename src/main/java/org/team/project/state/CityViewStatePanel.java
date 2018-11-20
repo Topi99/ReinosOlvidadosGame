@@ -208,7 +208,7 @@ public class CityViewStatePanel implements StatePanel {
         Map<String, Object> update = new HashMap<>();
         update.put("pending", false);
         myNotifRef.child(notif.from).updateChildrenAsync(update);
-        panel.getPanelCtx().setStatePanel(new PlayingStatePanel(true, city.getUID(), to));
+        panel.getPanelCtx().setStatePanel(new PlayingStatePanel(false, city.getUID(), to));
         panel.getPanelCtx().getStatePanel().addElements(panel);
       }
     };
