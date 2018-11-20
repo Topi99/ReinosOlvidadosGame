@@ -23,8 +23,8 @@ public class Characters extends Observable {
     }
     public void drawVida(Graphics g){
         g.setColor(c);
-        g.drawRect(getX()-10,getY()-5, getVida(),10);
-        g.fillRect(getX()-10, getY()-5, getVida(), 10);
+        g.drawRect(getX()-10,getY()-10, getVida()/2,5);
+        g.fillRect(getX()-10, getY()-10, getVida()/2, 5);
     }
 //hola soy pauchis :)
     public void setX(int n){

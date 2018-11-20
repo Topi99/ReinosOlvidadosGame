@@ -108,7 +108,7 @@ public class GamePanel extends JPanel implements Runnable {
       paintScreen();
 
       try {
-        Thread.sleep(40);
+        Thread.sleep(30);
       } catch (InterruptedException ex) {
         System.out.println(ex.toString());
       }

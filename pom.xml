@@ -102,6 +102,7 @@ limitations under the License.
                     <include>input.png</include>
                     <include>closeBtn.png</include>
                     <include>warriorsprite.png</include>
+                    <include>CrazyWizard.png</include>
                 </includes>
             </resource>
         </resources>
