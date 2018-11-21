@@ -3,7 +3,6 @@ package org.team.project;
 import java.awt.*;
 import java.awt.image.*;
 import java.util.Observable;
-import java.util.Observer;
 
 
 public class Entidad extends Observable{

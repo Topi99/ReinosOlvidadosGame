@@ -5,19 +5,14 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import com.google.firebase.auth.ExportedUserRecord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.ListUsersPage;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.team.project.GamePanel;
 import org.team.project.Notification;
@@ -31,7 +26,6 @@ public class Castle extends Button {
   private BufferedImage bg;
   private GamePanel panel;
   private CityViewStatePanel city;
-  private ArrayList<Button> notificationsBtns = new ArrayList<Button>();
 
   public Castle(int x, int y, int width, int height, GamePanel panel) {
     super(x, y, width, height);
@@ -57,7 +51,6 @@ public class Castle extends Button {
     ListUsersPage page;
     ArrayList<ExportedUserRecord> users = new ArrayList<ExportedUserRecord>();
     
-
     try {
       page = FirebaseAuth.getInstance().listUsers(null);
       while (page != null) {

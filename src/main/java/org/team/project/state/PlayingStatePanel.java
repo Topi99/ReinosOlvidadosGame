@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.team.project.EnergyWizard;
 import org.team.project.GamePanel;
+import org.team.project.inputs.Resources;
 import org.team.project.Warrior;
 import org.team.project.Wizard;
 import java.awt.image.BufferedImage;
@@ -106,6 +107,9 @@ public class PlayingStatePanel implements StatePanel {
     panel.getDbg().drawImage(bg, 0, 0, panel.getPwidth(), panel.getPheight(), null);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
     panel.getDbg().drawImage(this.getBg(), 0, 0, panel.getWidth(), panel.getHeight(), null);
+
+    Resources.getInstance().draw(panel.getDbg());
+    
     panel.getDbg().drawImage(mine.getBufferImage(), mine.getX(),mine.getY(), null);
     mine.drawVida(panel.getDbg());
    
@@ -133,8 +137,7 @@ public class PlayingStatePanel implements StatePanel {
   @Override
   public void addElements(GamePanel panel) {
     bg = GamePanel.resize(bg, panel.getPwidth(), panel.getPheight());
-    //wizard1=new Wizard();
-   //  ew=new EnergyWizard();
+    
 	}
 
   @Override
