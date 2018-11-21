@@ -33,6 +33,20 @@ public class PlayingStatePanel implements StatePanel {
     this.ref = database.getReference("matches/"+from+"-to-"+to);
     this.from = ref.child(from);
     this.to = ref.child(to);
+    
+    warrior1=new Warrior();
+    warrior2 = new Warrior();
+    
+    // if(retador) {
+    //   mine = warrior1;
+    //   other = warrior2;
+    // } else {
+    //   mine = warrior2;
+    //   other = warrior1;
+    // }
+
+    mine = warrior1;
+    other = warrior2;
 
     this.from.addValueEventListener(new ValueEventListener(){
     
@@ -109,20 +123,7 @@ public class PlayingStatePanel implements StatePanel {
   
   @Override
   public void addElements(GamePanel panel) {
-    warrior1=new Warrior();
-    warrior2 = new Warrior();
     
-    if(retador) {
-      mine = warrior1;
-    } else {
-      mine = warrior2;
-    }
-
-    if(retador) {
-      other = warrior2;
-    } else {
-      other = warrior1;
-    }
     //wizard1=new Wizard();
    //  ew=new EnergyWizard();
 	}
