@@ -1,6 +1,7 @@
 package org.team.project.state;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -31,7 +32,10 @@ public class LoggedOutState implements StatePanel {
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
 
     panel.getDbg().setColor(Color.black);
+    panel.getDbg().setFont(new Font("Tahoma",Font.BOLD,25));
     panel.getDbg().drawString("Inicia Sesión en el navegador", 50, 50);
+    panel.getDbg().setFont(new Font("Tahoma",Font.BOLD,11));
+    
 
     for(Input butn: inputs) {
       butn.draw(panel.getDbg());
@@ -51,9 +55,10 @@ public class LoggedOutState implements StatePanel {
 
   @Override
   public void addElements(GamePanel panel) {
+    
     TextField txtFieldUID = new TextField(50, 150, 200, 40);
 
-    Button btnLogin = new Button(50, 80, 100, 40, Color.blue, "Iniciar Sesión") {
+    Button btnLogin = new Button(50, 80, 100, 40, Color.blue, "   Log In") {
       @Override
       public void call() {
         this.active = true;
