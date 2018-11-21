@@ -7,6 +7,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import org.team.project.GamePanel;
 import org.team.project.inputs.Button;
@@ -15,9 +18,15 @@ import org.team.project.inputs.TextField;
 
 public class LoggedOutState implements StatePanel {
   private ArrayList<Input> inputs = new ArrayList<Input>();
+  private BufferedImage bg = null;
 
   @Override
   public void gameRender(GamePanel panel) {
+    try{
+      bg = ImageIO.read(this.getClass().getResource("../../../../inicio.jpeg"));
+    }catch(IOException e){
+      e.printStackTrace();
+    }
     if (panel.getDbImage() == null) {
       panel.setDbImage(panel.createImage(panel.getPwidth(), panel.getPheight()));
       if (panel.getDbImage() == null) {
@@ -26,7 +35,10 @@ public class LoggedOutState implements StatePanel {
       } else {
         panel.setDbg(panel.getDbImage().getGraphics());
       }
+      panel.getDbg().drawImage(this.getBg(), panel.getPwidth()/2 - panel.getWidth()/2, 0, panel.getWidth(), panel.getHeight(), null);
     }
+    
+    panel.getDbg().drawImage(bg, 0, 0, panel.getPwidth(), panel.getPheight(), null);
 
     panel.getDbg().setColor(Color.LIGHT_GRAY);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
@@ -52,7 +64,9 @@ public class LoggedOutState implements StatePanel {
       }
     }
   }
-
+  public BufferedImage getBg(){
+    return bg;
+  }
   @Override
   public void addElements(GamePanel panel) {
     
@@ -64,6 +78,7 @@ public class LoggedOutState implements StatePanel {
         this.active = true;
         panel.getPanelCtx().setStatePanel(new CityViewStatePanel(txtFieldUID.getValue()));
         panel.getPanelCtx().getStatePanel().addElements(panel);
+        
       }
     };
 
