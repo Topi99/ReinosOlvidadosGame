@@ -152,7 +152,7 @@ public class CityViewStatePanel implements StatePanel {
             }
           }// InfoStatePanel gameRender
     
-          // InfoStatePanel addElements
+          // InfoStatePanel addElement
           @Override 
           public void addElements(GamePanel panel) {
             yString = 150;
@@ -208,7 +208,7 @@ public class CityViewStatePanel implements StatePanel {
         Map<String, Object> update = new HashMap<>();
         update.put("pending", false);
         myNotifRef.child(notif.from).updateChildrenAsync(update);
-        panel.getPanelCtx().setStatePanel(new PlayingStatePanel(false, city.getUID(), to));
+        panel.getPanelCtx().setStatePanel(new PlayingStatePanel(false, notif.from, to));
         panel.getPanelCtx().getStatePanel().addElements(panel);
       }
     };
