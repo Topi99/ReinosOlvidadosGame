@@ -164,4 +164,14 @@ public class PlayingStatePanel implements StatePanel {
   public BufferedImage getBg(){
     return bg;
   }
+  public int randNumbers(GamePanel panel,int n){ //metodo que genera numeros aleatorios para la generación de recursos
+    if(n==1){
+      int numero = (int) (Math.random() * panel.getPwidth()) + 1;
+    return numero;
+    }
+    else{
+      int numero = (int) (Math.random() * panel.getPheight()) + 1;
+      return numero; 
+    }
+}
 }
