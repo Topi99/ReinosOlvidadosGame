@@ -40,13 +40,10 @@ public class LoggedOutState implements StatePanel {
     
     panel.getDbg().drawImage(bg, 0, 0, panel.getPwidth(), panel.getPheight(), null);
 
-    panel.getDbg().setColor(Color.LIGHT_GRAY);
-    panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
-
     panel.getDbg().setColor(Color.black);
     panel.getDbg().setFont(new Font("Tahoma",Font.BOLD,25));
     panel.getDbg().drawString("Inicia Sesión en el navegador", 50, 50);
-    panel.getDbg().setFont(new Font("Tahoma",Font.BOLD,11));
+    panel.getDbg().setFont(new Font("Tahoma",Font.PLAIN,11));
     
 
     for(Input butn: inputs) {

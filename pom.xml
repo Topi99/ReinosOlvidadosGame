@@ -106,6 +106,7 @@ limitations under the License.
                     <include>energyball.png</include>
                     <include>medieval.wav</include>
                      <include>mapabatalla.jpeg</include>
+                     <include>inicio.jpeg</include>
                 </includes>
             </resource>
         </resources>
