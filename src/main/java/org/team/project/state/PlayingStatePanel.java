@@ -55,8 +55,8 @@ public class PlayingStatePanel implements StatePanel {
         System.out.println("update\n\n\n"+snapshot.getValue());
         System.out.println("x "+snapshot.child("x").getValue());
         System.out.println("y "+snapshot.child("y").getValue());
-        mine.setX(Integer.parseInt(snapshot.child("x").getValue().toString()));
-        mine.setY(Integer.parseInt(snapshot.child("y").getValue().toString()));
+        warrior1.setX(Integer.parseInt(snapshot.child("x").getValue().toString()));
+        warrior1.setY(Integer.parseInt(snapshot.child("y").getValue().toString()));
       }
     
       @Override
@@ -72,8 +72,8 @@ public class PlayingStatePanel implements StatePanel {
         System.out.println("update\n\n\n"+snapshot.getValue());
         System.out.println("x "+snapshot.child("x").getValue());
         System.out.println("y "+snapshot.child("y").getValue());
-        other.setX(Integer.parseInt(snapshot.child("x").getValue().toString()));
-        other.setY(Integer.parseInt(snapshot.child("y").getValue().toString()));
+        warrior2.setX(Integer.parseInt(snapshot.child("x").getValue().toString()));
+        warrior2.setY(Integer.parseInt(snapshot.child("y").getValue().toString()));
       }
     
       @Override
@@ -131,6 +131,7 @@ public class PlayingStatePanel implements StatePanel {
   @Override
   public void keyPressed(int keyCode) {
     // warrior1.actions(keyCode);
+    data.clear();
 
     if (keyCode == KeyEvent.VK_RIGHT) {
       data.put("x", mine.getX()+7);
@@ -145,8 +146,13 @@ public class PlayingStatePanel implements StatePanel {
       data.put("x", mine.getX());
       data.put("y", mine.getY()+7);
     }
-    from.setValueAsync(data);
-    data.clear();
+
+    if(retador) {
+      from.setValueAsync(data);
+    } else {
+      to.setValueAsync(data);
+    }
+    
   }
   
 }
