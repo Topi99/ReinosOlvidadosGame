@@ -2,6 +2,7 @@ package org.team.project.state;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -14,6 +15,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.team.project.EnergyWizard;
 import org.team.project.GamePanel;
+import org.team.project.inputs.Button;
+import org.team.project.inputs.Input;
 import org.team.project.inputs.Resources;
 import org.team.project.Warrior;
 import org.team.project.Wizard;
@@ -32,6 +35,8 @@ public class PlayingStatePanel implements StatePanel {
   private DatabaseReference ref;
   private DatabaseReference from, to;
   private Map<String, Object> data = new HashMap<String, Object>();
+  private Map<String, Object> data2 = new HashMap<String, Object>();
+  private ArrayList<Input> inputs = new ArrayList<Input>();
 
   public PlayingStatePanel(boolean retador, String from, String to) {
     this.retador = retador;
@@ -55,6 +60,76 @@ public class PlayingStatePanel implements StatePanel {
 
     // mine=warrior2;
     // other=warrior1;
+
+    Button tree = new Button(100, 50, 60, 90, "../../../../tree.png") {
+      @Override
+      public void call() {
+        this.active = true;
+        data2.put("n", Resources.getInstance().getWood() + 5);
+        ref.child("Wood").setValueAsync(data2);
+      }
+    };
+
+    Button rock = new Button(250, 80, 50, 90, "../../../../rock.png") {
+      @Override
+      public void call() {
+        this.active = true;
+        data2.put("n", Resources.getInstance().getStone() + 5);
+        ref.child("Rock").setValueAsync(data2);
+      }
+    };
+
+    Button iron = new Button(400, 100, 70, 90, "../../../../iron.png") {
+      @Override
+      public void call() {
+        this.active = true;
+        data2.put("n", Resources.getInstance().getIron() + 5);
+        ref.child("Iron").setValueAsync(data2);
+      }
+    };
+
+    inputs.add(tree);
+    inputs.add(rock);
+    inputs.add(iron);
+
+    this.ref.child("Wood").addValueEventListener(new ValueEventListener(){
+    
+      @Override
+      public void onDataChange(DataSnapshot snapshot) {
+        Resources.getInstance().setWood(Integer.parseInt(snapshot.child("n").getValue().toString()));
+      }
+    
+      @Override
+      public void onCancelled(DatabaseError error) {
+        
+      }
+    });
+
+    this.ref.child("Rock").addValueEventListener(new ValueEventListener(){
+    
+      @Override
+      public void onDataChange(DataSnapshot snapshot) {
+        Resources.getInstance().setStone(Integer.parseInt(snapshot.child("n").getValue().toString()));
+      }
+    
+      @Override
+      public void onCancelled(DatabaseError error) {
+        
+      }
+    });
+
+    this.ref.child("Iron").addValueEventListener(new ValueEventListener(){
+    
+      @Override
+      public void onDataChange(DataSnapshot snapshot) {
+        Resources.getInstance().setIron(Integer.parseInt(snapshot.child("n").getValue().toString()));
+      }
+    
+      @Override
+      public void onCancelled(DatabaseError error) {
+        
+      }
+    });
 
     this.from.addValueEventListener(new ValueEventListener(){
     
@@ -109,6 +184,10 @@ public class PlayingStatePanel implements StatePanel {
     panel.getDbg().drawImage(this.getBg(), 0, 0, panel.getWidth(), panel.getHeight(), null);
 
     Resources.getInstance().draw(panel.getDbg());
+
+    for(Input i: inputs) {
+      i.draw(panel.getDbg());
+    }
     
     panel.getDbg().drawImage(mine.getBufferImage(), mine.getX(),mine.getY(), null);
     mine.drawVida(panel.getDbg());
@@ -132,6 +211,13 @@ public class PlayingStatePanel implements StatePanel {
 
   @Override
   public void checkInputs(int x, int y) {
+    for(Input input: inputs) {
+      if((x >= input.getX() && x < input.getX() + input.getWidth()) && (y >= input.getY() && y < input.getY() + input.getHeight())) {
+        input.call();
+      } else {
+        input.deactivate();
+      }
+    }
   }
   
   @Override
