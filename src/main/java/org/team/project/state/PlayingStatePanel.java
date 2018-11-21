@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
+import javax.imageio.ImageIO;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,6 +16,8 @@ import org.team.project.EnergyWizard;
 import org.team.project.GamePanel;
 import org.team.project.Warrior;
 import org.team.project.Wizard;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class PlayingStatePanel implements StatePanel {
   Warrior warrior1, warrior2, mine, other;
@@ -22,6 +25,7 @@ public class PlayingStatePanel implements StatePanel {
   EnergyWizard ew;
   int kc,i=1;
   int xw,yw;
+  private BufferedImage bg = null;
   private boolean retador;
   private final FirebaseDatabase database = FirebaseDatabase.getInstance();
   private DatabaseReference ref;
@@ -33,20 +37,23 @@ public class PlayingStatePanel implements StatePanel {
     this.ref = database.getReference("matches/"+from+"-to-"+to);
     this.from = ref.child(from);
     this.to = ref.child(to);
-    
     warrior1=new Warrior();
     warrior2 = new Warrior();
-    
-    // if(retador) {
-    //   mine = warrior1;
-    //   other = warrior2;
-    // } else {
-    //   mine = warrior2;
-    //   other = warrior1;
-    // }
+    try{
+    bg = ImageIO.read(this.getClass().getResource("../../../../mapabatalla.jpeg"));
+    }catch(IOException e){
+      e.printStackTrace();
+    }
+    if(retador) {
+      mine = warrior1;
+      other = warrior2;
+    } else {
+      mine = warrior2;
+      other = warrior1;
+    }
 
-    mine = warrior1;
-    other = warrior2;
+    // mine=warrior2;
+    // other=warrior1;
 
     this.from.addValueEventListener(new ValueEventListener(){
     
@@ -58,7 +65,7 @@ public class PlayingStatePanel implements StatePanel {
         warrior1.setX(Integer.parseInt(snapshot.child("x").getValue().toString()));
         warrior1.setY(Integer.parseInt(snapshot.child("y").getValue().toString()));
       }
-    
+   
       @Override
       public void onCancelled(DatabaseError error) {
         
@@ -96,11 +103,12 @@ public class PlayingStatePanel implements StatePanel {
     }
    //ew.addObserver(warrior1);
     panel.getDbg().setColor(Color.white);
+    panel.getDbg().drawImage(bg, 0, 0, panel.getPwidth(), panel.getPheight(), null);
     panel.getDbg().fillRect(0, 0, panel.getPwidth(), panel.getPheight());
-    
+    panel.getDbg().drawImage(this.getBg(), 0, 0, panel.getWidth(), panel.getHeight(), null);
     panel.getDbg().drawImage(mine.getBufferImage(), mine.getX(),mine.getY(), null);
     mine.drawVida(panel.getDbg());
-    
+   
     panel.getDbg().drawImage(other.getBufferImage(), other.getX(),other.getY(), null);
     other.drawVida(panel.getDbg());
      
@@ -116,6 +124,7 @@ public class PlayingStatePanel implements StatePanel {
     //}
      //System.out.println(wizard1.getX()+","+wizard1.getY()+ ":"+ wizard1.getVida()+ " ima:"+wizard1.getIma());
   } // gameRender()
+  
 
   @Override
   public void checkInputs(int x, int y) {
@@ -123,7 +132,7 @@ public class PlayingStatePanel implements StatePanel {
   
   @Override
   public void addElements(GamePanel panel) {
-    
+    bg = GamePanel.resize(bg, panel.getPwidth(), panel.getPheight());
     //wizard1=new Wizard();
    //  ew=new EnergyWizard();
 	}
@@ -146,13 +155,13 @@ public class PlayingStatePanel implements StatePanel {
       data.put("x", mine.getX());
       data.put("y", mine.getY()+7);
     }
-
     if(retador) {
       from.setValueAsync(data);
     } else {
       to.setValueAsync(data);
     }
-    
   }
-  
+  public BufferedImage getBg(){
+    return bg;
+  }
 }

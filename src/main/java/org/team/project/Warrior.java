@@ -39,7 +39,7 @@ public class Warrior extends Characters{
         if(ima<=10)
         {
             men=ss.grabImage(ima,3,32,32);
-            setIma(1);
+            ima++;
         }
         else
         ima=1;

@@ -105,6 +105,7 @@ limitations under the License.
                     <include>CrazyWizard.png</include>
                     <include>energyball.png</include>
                     <include>medieval.wav</include>
+                     <include>mapabatalla.jpeg</include>
                 </includes>
             </resource>
         </resources>

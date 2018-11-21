@@ -152,7 +152,7 @@ public class CityViewStatePanel implements StatePanel {
             }
           }// InfoStatePanel gameRender
     
-          // InfoStatePanel addElements
+          // InfoStatePanel addElement
           @Override 
           public void addElements(GamePanel panel) {
             yString = 150;
